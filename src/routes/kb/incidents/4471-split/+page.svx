@@ -1,0 +1,69 @@
+---
+layout: runbook
+title: '#4471, split · three problems, not one'
+owner: konrad-n
+status: open
+reviewed: 2026-11-19
+signature: konrad-n
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/konrad-n/kb-4471-split/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) says one bug, one fix. Read the reports, not the subject lines, and
+#4471 holds three problems. Each needs its own fix, so each now has its own ticket.
+
+<Callout kind="warn">
+Not known, and not one issue. The queued parser fix does not cover the booking-v3 reports or
+the one-day moves.
+</Callout>
+
+## What #4471 holds
+
+<ProblemTable ticket={4471} {issues} />
+
+The counts come from `reports-4471.json` at render time. The export repeats some reports (its
+pages overlap), so a report counts once by its id.
+
+## The three problems
+
+**Month read first.** The shared parser reads every date month first. Our tenants write the
+day first, so any date with a day of 12 or less comes out flipped: 5 June becomes 6 May. These
+reports name both dates, and the day and month are swapped every time. A few name no date at
+all ("wrong day", "a setting for my country writes the day first"); they come from the same
+tenants and channels, so they count here.
+
+**MM/DD hint on booking-v3.** The booking-v3 form prints `MM/DD/YYYY` under its date field.
+Its three tenants write the day first, so their people type the month first, as the hint asks,
+and the form reads it the tenant's way. The reports read exactly like the parser's, but the fix
+is in the form, so the parser fix does not close them.
+
+**Moved by one day.** These dates are not flipped; they move by a day: Tuesday shows as Monday,
+one city gets a different day than another, an invite is stamped before its booking was made.
+That points at time zones, not at date order. The desk marked them when it read them
+(`desk-notes.json`), then filed them by tenant, under the parser.
+
+## Why the subject lines hid this
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on subject alone. All three
+problems arrive under the same dozen subjects ("Wrong day on the invite", "Month and day
+swapped?"), so all three landed in #4471. The cause view below shows the split the kb already
+computed, and the one-day reports still filed under `parser`.
+
+<CauseTable ticket={4471} />
+
+## For the desk
+
+- Read the body before you merge a large ticket. The subject tells you that a date is wrong,
+  not how.
+- Intake's tag follows the reporter's browser (`en-US` → `hint`). The tenant decides the
+  cause; trust the tables, not the tag.
+
+<RenderStamp {signature} />
