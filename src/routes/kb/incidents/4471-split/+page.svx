@@ -48,7 +48,8 @@ is in the form, so the parser fix does not close them.
 **Moved by one day.** These dates are not flipped; they move by a day: Tuesday shows as Monday,
 one city gets a different day than another, an invite is stamped before its booking was made.
 That points at time zones, not at date order. The desk marked them when it read them
-(`desk-notes.json`), then filed them by tenant, under the parser.
+(`desk-notes.json`), then filed them by tenant, under the parser. The table counts them the
+desk's way, under the parser, and again on their own row, so they have a ticket of their own.
 
 ## Why the subject lines hid this
 

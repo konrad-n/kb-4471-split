@@ -44,6 +44,13 @@
   </tbody>
 </table>
 
+{#if split.overlap.length}
+  <p class="note">
+    {split.overlap.length} reports count twice: under their cause, as the desk files them, and under
+    <code>one-day</code>, as the desk read them ({split.overlap.join(', ')}).
+  </p>
+{/if}
+
 {#each split.problems as p (p.key)}
   <details>
     <summary>{LABEL[p.key]}: {p.ids.length} report ids</summary>
@@ -54,6 +61,7 @@
 <style>
   .sum { font-size: 1.1rem; }
   .none { color: var(--warn); font-weight: 600; }
+  .note { color: var(--muted); font-size: 0.85em; }
   details { margin: 0.4rem 0; }
   summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; }
   .ids { font: 0.8rem/1.5 var(--mono); color: var(--muted); word-spacing: 0.3em; }
