@@ -4,7 +4,7 @@ title: '#4471, split · three problems, not one'
 owner: konrad-n
 status: open
 reviewed: 2026-11-19
-signature: konrad-n
+signature: v1.eyJzdWIiOiIzNDEyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTUxMTI4MjUsImV4cCI6MTc5NTE5OTIyNX0.mJtCk5kaI3onbMMdEBC-z8-AYofF_ahaMuPdazlajIo
 ---
 
 <script>
